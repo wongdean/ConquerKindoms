@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conquer Kingdoms - PetConnect.it.com</title>
+    <meta name="description" content="Play Conquer Kingdoms on PetConnect.it.com, the ultimate destination for online strategy gaming.">
+    <link rel="canonical" href="https://petconnect.it.com" />
+    <style>
+        :root {
+            --primary: #007aff;
+            --secondary: #5ac8fa;
+            --accent: #ff9500;
+            --dark: #1c1c1e;
+            --light: #f2f2f7;
+            --text: #333333;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        .site-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            text-align: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: white;
+        }
+        
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        
+        /* 游戏容器放在顶部，成为焦点 */
+        .game-container {
+            background-color: var(--dark);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            margin-top: 1rem;
+        }
+        
+        .game-header {
+            padding: 0.75rem 1rem;
+            background-color: var(--dark);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .game-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .fullscreen-btn {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        
+        .fullscreen-btn:hover {
+            background-color: #ff8000;
+        }
+        
+        .game-frame-container {
+            position: relative;
+            height: 600px; /* 固定高度，确保显示游戏区域 */
+            overflow: hidden;
+        }
+        
+        .game-frame {
+            position: absolute;
+            top: -150px; /* 向上偏移，直接显示游戏区域 */
+            left: 0;
+            width: 100%;
+            height: calc(100% + 200px); /* 增加高度，确保游戏区域可见 */
+            border: none;
+        }
+        
+        .game-info {
+            padding: 1.5rem;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        h2 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+        
+        .info-columns {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .info-column {
+            background-color: var(--light);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+        
+        h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+        
+        ul {
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            margin-top: 2rem;
+            font-size: 0.9rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            margin-top: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links li {
+            margin: 0 0.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+        
+        /* 全屏模式 */
+        .fullscreen-mode .game-frame-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding-top: 0;
+            z-index: 1000;
+            background-color: black;
+        }
+        
+        .fullscreen-mode .game-frame {
+            top: 0; /* 全屏模式时不需要偏移 */
+            height: 100%; /* 全屏高度 */
+        }
+        
+        .exit-fullscreen-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            display: none;
+        }
+        
+        .fullscreen-mode .exit-fullscreen-btn {
+            display: block;
+        }
+        
+        /* 移动端优化 */
+        @media (max-width: 768px) {
+            .game-frame-container {
+                height: 450px; /* 移动端减小高度 */
+            }
+            
+            .game-header {
+                flex-direction: column;
+                gap: 0.5rem;
+                padding: 0.5rem;
+            }
+            
+            .info-columns {
+                grid-template-columns: 1fr;
+            }
+            
+            .game-title, .fullscreen-btn {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .fullscreen-btn {
+                margin-top: 0.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <a href="/" class="logo">PetConnect.it.com</a>
+    </header>
+    
+    <div class="content-wrapper">
+        <!-- 游戏区域放在顶部 -->
+        <div class="game-container">
+            <div class="game-header">
+                <div class="game-title">Conquer Kingdoms</div>
+                <button class="fullscreen-btn" onclick="toggleFullscreen()">Fullscreen Mode</button>
+            </div>
+            
+            <div class="game-frame-container">
+                <iframe src="https://www.onlinegames.io/conquer-kingdoms/" class="game-frame" allowfullscreen></iframe>
+                <button class="exit-fullscreen-btn" onclick="exitFullscreen()">Exit Fullscreen</button>
+            </div>
+        </div>
+        
+        <div class="game-info">
+            <h2>About Conquer Kingdoms</h2>
+            <p>Conquer Kingdoms is a 3D strategy adventure where you play as a fearless king leading five trusty soldiers. Explore lands, collect treasures, and battle enemies to build your kingdom.</p>
+            
+            <div class="info-columns">
+                <div class="info-column">
+                    <h3>How to Play</h3>
+                    <p>Build your empire and show your rivals who's in charge! Guide your soldiers through unknown territory to battle foes and collect treasure chests.</p>
+                </div>
+                
+                <div class="info-column">
+                    <h3>Controls</h3>
+                    <ul>
+                        <li><strong>Move Troops:</strong> WASD/arrows or drag mouse</li>
+                        <li><strong>Special Attack:</strong> Spacebar</li>
+                        <li><strong>Zoom:</strong> Mouse wheel</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2024 PetConnect.it.com - All Rights Reserved</p>
+        <ul class="footer-links">
+            <li><a href="/privacy">Privacy</a></li>
+            <li><a href="/terms">Terms</a></li>
+        </ul>
+    </footer>
+    
+    <script>
+        function toggleFullscreen() {
+            document.body.classList.add('fullscreen-mode');
+        }
+        
+        function exitFullscreen() {
+            document.body.classList.remove('fullscreen-mode');
+        }
+        
+        // 页面加载时自动滚动到游戏容器
+        window.addEventListener('load', function() {
+            // 确保游戏区域可见
+            document.querySelector('.game-container').scrollIntoView({behavior: 'smooth'});
+        });
+    </script>
+</body>
+</html> 
